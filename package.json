@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node dist/index.js",
+    "start": "node  --max_old_space_size=8000 dist/index.js",
     "predev": "npm run build",
     "dev": "concurrently \"npx tsc -w\" \"nodemon dist/index.js\""
   },

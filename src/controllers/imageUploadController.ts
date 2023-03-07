@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import uploadFileS3 from "../services/awsFileUpload.js";
 import cloudinary from "../services/cloudinaryFileUpload.js";
-import { db } from "../utils/db.server.js";
+// import { db } from "../utils/db.server.js";
 
 const cloudinaryUploadImage = async (req: Request, res: Response) => {
   const file = req?.files?.image;
@@ -18,11 +18,14 @@ const cloudinaryUploadImage = async (req: Request, res: Response) => {
     });
     console.log("Finish uploading in service");
 
+    // If we want to save the image URL in the database
+    /*
     await db.image.create({
       data: {
         imageURL: result.secure_url,
       },
     });
+    */
 
     res.status(201).json({ result: result.secure_url });
 

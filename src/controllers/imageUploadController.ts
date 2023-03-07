@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import uploadFileS3 from "../services/awsFileUpload.js";
 import cloudinary from "../services/cloudinaryFileUpload.js";
-// import { db } from "../utils/db.server.js";
 
 const cloudinaryUploadImage = async (req: Request, res: Response) => {
   const file = req?.files?.image;
@@ -18,15 +17,6 @@ const cloudinaryUploadImage = async (req: Request, res: Response) => {
     });
     console.log("Finish uploading in service");
 
-    // If we want to save the image URL in the database
-    /*
-    await db.image.create({
-      data: {
-        imageURL: result.secure_url,
-      },
-    });
-    */
-
     res.status(201).json({ result: result.secure_url });
 
     return result;
@@ -42,22 +32,4 @@ const s3UploadImage = async (req: Request, res: Response) => {
   res.status(201).json({ imageLink: result });
 };
 
-const getImage = async (req: Request, res: Response) => {
-  const { id } = req.params as any;
-
-  try {
-    const image = await db.image.findFirst({
-      where: {
-        id,
-      },
-    });
-
-    if (!image) return res.status(404).json({ message: "Image not found" });
-
-    res.status(200).json({ image } as any);
-  } catch (error) {
-    console.log("This is the error ", error);
-  }
-};
-
-export { cloudinaryUploadImage, s3UploadImage, getImage };
+export { cloudinaryUploadImage, s3UploadImage };
